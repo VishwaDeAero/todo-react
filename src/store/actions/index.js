@@ -55,3 +55,9 @@ export const setEdit = () => {
         type: actionTypes.SET_EDIT
     }
 }
+export const setSearch = (value) => {
+    return{ 
+        type: actionTypes.SET_SEARCH,
+        searchValue: value
+    }
+}

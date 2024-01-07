@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     }
 });
 
-function TodoList({ todoList, setTitle, setDesc, setItem, setEdit, deleteItem }) {
+function TodoList({ todoList, search, searchValue, setTitle, setDesc, setItem, setEdit, deleteItem }) {
     const classes = useStyles();
 
     const handleEdit = (item) => {
@@ -48,7 +48,8 @@ function TodoList({ todoList, setTitle, setDesc, setItem, setEdit, deleteItem })
                 <Typography variant="h6" color="error">No Data to display</Typography>
                 :
                 (<List>
-                    {todoList.map(item => {
+                    {/* Run when search bar is empty - Showing all */}
+                    {!search? todoList.map(item => {
                         return (
                             <ListItem className={classes.list} key={item.id}>
                                 <Card color="primary" className={classes.card}>
@@ -67,7 +68,30 @@ function TodoList({ todoList, setTitle, setDesc, setItem, setEdit, deleteItem })
                                 </Card>
                             </ListItem>
                         )
-                    })}
+                    }):
+                    /* Run when search bar has text - Showing search results */
+                    todoList.filter(item => item.title.toLowerCase().includes(searchValue) || item.desc.toLowerCase().includes(searchValue))
+                    .map(item => {
+                        return (
+                            <ListItem className={classes.list} key={item.id}>
+                                <Card color="primary" className={classes.card}>
+                                    <CardContent>
+                                        <Typography variant="h5" color='primary'>{item.title}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{item.desc}</Typography>
+                                    </CardContent>
+                                    <CardActions disableSpacing>
+                                        <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(item)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(item)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </CardActions>
+                                </Card>
+                            </ListItem>
+                        )
+                    })
+                    }
                 </List>)
             }
         </Container>
@@ -76,7 +100,9 @@ function TodoList({ todoList, setTitle, setDesc, setItem, setEdit, deleteItem })
 }
 const mapStateToProps = (state) => {
     return {
-        todoList: state.items
+        todoList: state.items,
+        search: state.search,
+        searchValue: state.searchValue
     }
 }
 

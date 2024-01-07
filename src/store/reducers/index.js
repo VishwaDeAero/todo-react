@@ -5,7 +5,9 @@ const initialState = {
     title: "",
     desc: "",
     item: "",
+    searchValue: "",
     edit: false,
+    search: false,
     error: {}
 }
 
@@ -94,6 +96,20 @@ const items = (state = initialState, action) => {
                 ...state,
                 edit: true,
                 error: {}
+            }
+        case actionTypes.SET_SEARCH:
+            console.log(state)
+            if((action.searchValue).length === 0){
+                return{
+                    ...state,
+                    search: false,
+                    searchValue: ""
+                }
+            }
+            return {
+                ...state,
+                search: true,
+                searchValue: action.searchValue
             }
 
         default:
