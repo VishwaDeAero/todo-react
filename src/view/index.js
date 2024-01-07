@@ -8,8 +8,9 @@ import TodoList from './todoList';
 
 const useStyles = makeStyles({
     root: {
+        background: "aliceBlue",
         textAlign: "center",
-        height: "100%"
+        minHeight: "100vh"
     }
 });
 
@@ -29,11 +30,10 @@ function Todo() {
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
-
-        <Container maxWidth="sm">
-                <Header />
-                <Form />
-                <TodoList />
+                <Container maxWidth="sm">
+                    <Header />
+                    <Form />
+                    <TodoList />
                 </Container>
             </div>
         </ThemeProvider>
