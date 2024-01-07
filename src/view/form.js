@@ -74,7 +74,7 @@ const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, 
                                 error={!!error.description} helperText={error.description} className={classes.desc} id="description" fullWidth label="Enter Description" minRows={3} multiline variant="outlined" />
                         </Grid>
                         <Grid item md={12}>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={handleClick}>
+                            <Button className={classes.button} variant="contained" color="primary" disabled={!title || !desc} onClick={handleClick}>
                                 {edit ? "Edit" : "Add"}
                             </Button>
                         </Grid>
