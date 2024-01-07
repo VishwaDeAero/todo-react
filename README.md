@@ -1,3 +1,12 @@
+# Simple Todo React App with Redux and Material UI
+
+- Add Todo
+- Update Todo
+- Delete Todo
+- Search Todos
+- Simple Form Validations
+- Custom Theme Designs Added
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
