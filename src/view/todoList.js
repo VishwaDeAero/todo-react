@@ -70,7 +70,7 @@ function TodoList({ todoList, search, searchValue, setTitle, setDesc, setItem, s
                         )
                     }):
                     /* Run when search bar has text - Showing search results */
-                    todoList.filter(item => item.title.toLowerCase().includes(searchValue) || item.desc.toLowerCase().includes(searchValue))
+                    todoList.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()) || item.desc.toLowerCase().includes(searchValue.toLowerCase()))
                     .map(item => {
                         return (
                             <ListItem className={classes.list} key={item.id}>
