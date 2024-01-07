@@ -8,47 +8,43 @@ import { makeStyles, styled, alpha } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import * as actionTypes from '../store/actions';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     heading: {
         flexGrow: 1
         // margin: "auto"
-    }
-});
-
-// Search
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(1),
+            width: 'auto',
+        },
     },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    width: '100%',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 6),
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
+        width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: '12ch',
             '&:focus': {
@@ -57,7 +53,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-//Search Parameters end
 
 const Header = ({ setSearch, searchValue }) => {
     const classes = useStyles();
@@ -72,17 +67,21 @@ const Header = ({ setSearch, searchValue }) => {
         <AppBar position="static">
             <Toolbar>
                 <Typography className={classes.heading} variant="h5" align='left'>Simple ToDo</Typography>
-                <Search>
-                    <SearchIconWrapper>
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                         <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
+                    </div>
+                    <InputBase
                         value={searchValue}
                         placeholder="Search…"
                         inputProps={{ 'aria-label': 'search' }}
                         onChange={handleSearch}
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
                     />
-                </Search>
+                </div>
             </Toolbar>
         </AppBar>
     )
