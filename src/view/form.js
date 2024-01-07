@@ -2,28 +2,35 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
-import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import * as actionTypes from '../store/actions';
 
 const useStyles = makeStyles({
-    root: {
-        marginTop: 16,
-        marginBottom: 16,
-        padding: 16,
-        boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)"
+    card: {
+        margin: 20,
+    },
+    // root: {
+    //     marginTop: 16,
+    //     marginBottom: 16,
+    //     padding: 16,
+    //     boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)"
+    // },
+    desc: {
+        marginTop: 15
     },
     button: {
-        marginTop: 16
+        width: '100%',
+        marginTop: 15
     }
 });
 
-const Form = ({ title, setTitle, addItem, editItem, edit, error, setError }) => {
+const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, setError }) => {
     const classes = useStyles();
-    const handleChange = (event) => {
+    const handleTitleChange = (event) => {
         const title = event.target.value;
-        
         setTitle(title);
         if(title.length === 0){
             setError("Please enter title");
@@ -31,37 +38,45 @@ const Form = ({ title, setTitle, addItem, editItem, edit, error, setError }) => 
             setError("");
         }
     }
+    const handleDescChange = (event) => {
+        const desc = event.target.value;
+        setDesc(desc);
+    }
 
     const handleClick = () => {
-        if(title.length === 0){
-            setError("Please enter title");
-            return;
-        }
         if (edit) {
             editItem();
         } else {
             addItem();
         }
     }
+
     return (
-        <Container maxWidth="sm" className={classes.root}>
-            <Grid container alignItems="center">
-                <Grid item md={12}>
-                    <TextField value={title} onChange={handleChange} 
-                    error={!!error} helperText={error} id="outlined-basic" fullWidth label="Enter Title" multiline variant="outlined" />
-                </Grid>
-                <Grid item md={12}>
-                    <Button className={classes.button} variant="contained" color="primary" onClick={handleClick}>
-                        {edit ? "Edit" : "Add"}
-                    </Button>
-                </Grid>
-            </Grid>
-        </Container>
+            <Card sx={{ minWidth: 275 }} className={classes.card}>
+                <CardContent>
+                    <Grid container alignItems="center">
+                        <Grid item md={12}>
+                            <TextField value={title} onChange={handleTitleChange}
+                                error={!!error} helperText={error} id="title" fullWidth label="Enter Title" variant="outlined" />
+                        </Grid>
+                        <Grid item md={12}>
+                            <TextField value={desc} onChange={handleDescChange}
+                                className={classes.desc} id="desc" fullWidth label="Enter Description" minRows={3} multiline variant="outlined" />
+                        </Grid>
+                        <Grid item md={12}>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={handleClick}>
+                                {edit ? "Edit" : "Add"}
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
     )
 }
 const mapStateToProps = (state) => {
     return {
         title: state.title,
+        desc: state.desc,
         edit: state.edit,
         error: state.error
     }
@@ -70,6 +85,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         setTitle: (title) => dispatch(actionTypes.setTitle(title)),
+        setDesc: (desc) => dispatch(actionTypes.setDesc(desc)),
         setError: (error) => dispatch(actionTypes.setError(error)),
         addItem: () => dispatch(actionTypes.addItem()),
         editItem: () => dispatch(actionTypes.editItem()),

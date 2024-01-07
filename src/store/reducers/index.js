@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     items: [],
     title: "",
+    desc: "",
     item: "",
     edit: false,
     error: ""
@@ -13,12 +14,14 @@ const items = (state = initialState, action) => {
         case actionTypes.ADD_ITEM:
             const newitem = {
                 id: Date.now(),
-                value: state.title,
+                title: state.title,
+                desc: state.desc
             }
             return {
                 ...state,
                 items: state.items.concat(newitem),
                 title: "",
+                desc: "",
                 error: ""
             }
 
@@ -26,10 +29,12 @@ const items = (state = initialState, action) => {
             var newList = [...state.items];
             var index = newList.indexOf(state.item);
             if (index !== -1) {
-                newList[index].value = state.title;
+                newList[index].title = state.title;
+                newList[index].desc = state.desc;
                 return {
                     ...state,
                     title: "",
+                    desc: "",
                     edit: false,
                     items: newList,
                     error: ""
@@ -57,6 +62,11 @@ const items = (state = initialState, action) => {
             return {
                 ...state,
                 title: action.title
+            }
+        case actionTypes.SET_DESC:
+            return {
+                ...state,
+                desc: action.desc
             }
         case actionTypes.SET_ITEM:
             return {

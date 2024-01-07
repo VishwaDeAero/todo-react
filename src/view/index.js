@@ -1,5 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import Form from './form';
 import Header from './header';
 import TodoList from './todoList';
@@ -10,14 +12,31 @@ const useStyles = makeStyles({
         height: "100%"
     }
 });
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1976d2',
+            light: '#42a5f5',
+            dark: '#1565c0',
+            contrastText: '#fff',
+        }
+    },
+});
+
 function Todo() {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <Header />
-            <Form />
-            <TodoList />
-        </div>
+        <ThemeProvider theme={theme}>
+            <div className={classes.root}>
+
+        <Container maxWidth="sm">
+                <Header />
+                <Form />
+                <TodoList />
+                </Container>
+            </div>
+        </ThemeProvider>
     )
 
 }

@@ -25,6 +25,12 @@ export const setTitle = (title) => {
         title: title 
     }
 }
+export const setDesc = (desc) => {
+    return{ 
+        type: actionTypes.SET_DESC, 
+        desc: desc 
+    }
+}
 export const setError = (error) => {
     return{ 
         type: actionTypes.SET_ERROR, 
