@@ -6,7 +6,7 @@ const initialState = {
     desc: "",
     item: "",
     edit: false,
-    error: ""
+    error: {}
 }
 
 const items = (state = initialState, action) => {
@@ -22,7 +22,7 @@ const items = (state = initialState, action) => {
                 items: state.items.concat(newitem),
                 title: "",
                 desc: "",
-                error: ""
+                error: {}
             }
 
         case actionTypes.EDIT_ITEM:
@@ -37,7 +37,7 @@ const items = (state = initialState, action) => {
                     desc: "",
                     edit: false,
                     items: newList,
-                    error: ""
+                    error: {}
                 }
             } else {
                 return {
@@ -72,18 +72,28 @@ const items = (state = initialState, action) => {
             return {
                 ...state,
                 item: action.item,
-                error: ""
+                error: {}
             }
         case actionTypes.SET_ERROR:
+            let newErrors = state.error;
+            console.log("Errors", action.element, action.error);
+            newErrors[action.element] = action.error;
             return {
                 ...state,
-                error: action.error
+                error: newErrors
+            }
+        case actionTypes.DEL_ERROR:
+            let updatedErrors = state.error;
+            delete updatedErrors[action.element];
+            return {
+                ...state,
+                error: updatedErrors
             }
         case actionTypes.SET_EDIT:
             return {
                 ...state,
                 edit: true,
-                error: ""
+                error: {}
             }
 
         default:

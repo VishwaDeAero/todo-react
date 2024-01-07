@@ -7,4 +7,5 @@ export const SET_DESC = "SET_DESC"
 export const SET_ITEM = "SET_ITEM"
 export const SET_EDIT = "SET_EDIT"
 export const SET_ERROR = "SET_ERROR"
+export const DEL_ERROR = "DEL_ERROR"
 

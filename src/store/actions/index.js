@@ -31,10 +31,17 @@ export const setDesc = (desc) => {
         desc: desc 
     }
 }
-export const setError = (error) => {
+export const setError = (element, error) => {
     return{ 
-        type: actionTypes.SET_ERROR, 
+        type: actionTypes.SET_ERROR,
+        element: element,
         error: error 
+    }
+}
+export const deleteError = (element) => {
+    return{ 
+        type: actionTypes.DEL_ERROR,
+        element: element
     }
 }
 export const setItem = (item) => {

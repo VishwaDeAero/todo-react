@@ -27,20 +27,18 @@ const useStyles = makeStyles({
     }
 });
 
-const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, setError }) => {
+const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, setError, deleteError }) => {
     const classes = useStyles();
     const handleTitleChange = (event) => {
         const title = event.target.value;
         setTitle(title);
-        if(title.length === 0){
-            setError("Please enter title");
-        }else{
-            setError("");
-        }
+        validate(event)
+        
     }
     const handleDescChange = (event) => {
         const desc = event.target.value;
         setDesc(desc);
+        validate(event)
     }
 
     const handleClick = () => {
@@ -51,17 +49,29 @@ const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, 
         }
     }
 
+    const validate = (event) => {
+        const id = event.target.id;
+        const value = event.target.value;
+        if(value.length === 0){
+            setError(id, `Please enter ${id}`);
+            return false;
+        }else{
+            deleteError(id);
+            return true;
+        }
+    }
+
     return (
             <Card sx={{ minWidth: 275 }} className={classes.card}>
                 <CardContent>
                     <Grid container alignItems="center">
                         <Grid item md={12}>
                             <TextField value={title} onChange={handleTitleChange}
-                                error={!!error} helperText={error} id="title" fullWidth label="Enter Title" variant="outlined" />
+                                error={!!error.title} helperText={error.title} id="title" fullWidth label="Enter Title" variant="outlined" />
                         </Grid>
                         <Grid item md={12}>
                             <TextField value={desc} onChange={handleDescChange}
-                                className={classes.desc} id="desc" fullWidth label="Enter Description" minRows={3} multiline variant="outlined" />
+                                error={!!error.description} helperText={error.description} className={classes.desc} id="description" fullWidth label="Enter Description" minRows={3} multiline variant="outlined" />
                         </Grid>
                         <Grid item md={12}>
                             <Button className={classes.button} variant="contained" color="primary" onClick={handleClick}>
@@ -86,7 +96,8 @@ const mapDispatchToProps = dispatch => {
     return {
         setTitle: (title) => dispatch(actionTypes.setTitle(title)),
         setDesc: (desc) => dispatch(actionTypes.setDesc(desc)),
-        setError: (error) => dispatch(actionTypes.setError(error)),
+        setError: (element, error) => dispatch(actionTypes.setError(element, error)),
+        deleteError: (element) => dispatch(actionTypes.deleteError(element)),
         addItem: () => dispatch(actionTypes.addItem()),
         editItem: () => dispatch(actionTypes.editItem()),
 
