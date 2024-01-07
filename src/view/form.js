@@ -18,6 +18,9 @@ const useStyles = makeStyles({
     //     padding: 16,
     //     boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)"
     // },
+    fullWidth:{
+        width:'100%',
+    },
     desc: {
         marginTop: 15
     },
@@ -65,15 +68,15 @@ const Form = ({ title, desc, setTitle, setDesc, addItem, editItem, edit, error, 
             <Card sx={{ minWidth: 275 }} className={classes.card}>
                 <CardContent>
                     <Grid container alignItems="center">
-                        <Grid item md={12}>
+                        <Grid className={classes.fullWidth} item md={12}>
                             <TextField value={title} onChange={handleTitleChange}
                                 error={!!error.title} helperText={error.title} id="title" fullWidth label="Enter Title" variant="outlined" />
                         </Grid>
-                        <Grid item md={12}>
+                        <Grid className={classes.fullWidth} item md={12}>
                             <TextField value={desc} onChange={handleDescChange}
                                 error={!!error.description} helperText={error.description} className={classes.desc} id="description" fullWidth label="Enter Description" minRows={3} multiline variant="outlined" />
                         </Grid>
-                        <Grid item md={12}>
+                        <Grid className={classes.fullWidth} item md={12}>
                             <Button className={classes.button} variant="contained" color="primary" disabled={!title || !desc} onClick={handleClick}>
                                 {edit ? "Edit" : "Add"}
                             </Button>
